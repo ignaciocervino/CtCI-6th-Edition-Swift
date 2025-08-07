@@ -8,22 +8,23 @@ import Foundation
 extension String {
     
     func urlIfy() -> String {
-        
-    }
-    
-    mutating func urlIfyInPlace() {
-        
+        var result = ""
+
+        for letter in self {
+            if letter == " " {
+                result.append("%20")
+            } else {
+                result.append(letter)
+            }
+        }
+
+        return result
     }
 }
 
 let verify = "mr%20john%20smith"
 var string = "mr john smith"
 assert(string.urlIfy() == verify)
-
-string = "mr john smith    "
-var copy = string
-copy.urlIfyInPlace()
-print("\"\(copy)\"")
-assert(copy == verify)
+print(string.urlIfy() == verify)
 
 
