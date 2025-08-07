@@ -9,9 +9,11 @@ extension String {
     
     func hasUniqueCharactersWithoutAdditionalDataStructs() -> Bool {
         for (i, letter) in self.enumerated() {
-            for (j, letter2) in self.enumerated() {
-                guard i != j else { continue }
-                guard letter != letter2 else { return false }
+            var start = i + 1
+            for j in start..<self.count {
+                if letter == self[self.index(self.startIndex, offsetBy: j)] {
+                    return false
+                }
             }
         }
         return true
