@@ -7,23 +7,11 @@ import Foundation
 extension Tree {
     
     func isBST() -> Bool {
-        return isBST(min: nil, max: nil)
+        
     }
     
     private func isBST(min: Element?, max: Element?) -> Bool {
-        guard case .node = self else { return true }
         
-        if let min = min, let element = element, min >= element {
-            return false
-        }
-        if let max = max, let element = element, max < element {
-            return false
-        }
-        let leftIsBST = left.isBST(min: min, max: element)
-        if leftIsBST {
-            return right.isBST(min: element, max: max)
-        }
-        return false
     }
 }
 

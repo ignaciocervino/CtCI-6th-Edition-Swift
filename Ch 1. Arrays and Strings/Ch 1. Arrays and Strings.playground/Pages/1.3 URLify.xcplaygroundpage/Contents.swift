@@ -8,22 +8,11 @@ import Foundation
 extension String {
     
     func urlIfy() -> String {
-        var s = ""
-        for char in self {
-            s += char == " " ? "%20" : String(char)
-        }
-        return s
+        
     }
     
     mutating func urlIfyInPlace() {
-        var replacements = 0
-        for i in indices where self[i] == " " {
-            replaceSubrange(i...i, with: "%")
-            let next = index(after: i)
-            insert(contentsOf: "20", at: next)
-            replacements += 1
-        }
-        removeLast(replacements * 2)
+        
     }
 }
 

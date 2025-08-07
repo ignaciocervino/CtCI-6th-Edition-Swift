@@ -12,22 +12,14 @@ import Foundation
 extension Graph {
     
     func hasRouteDFS(from: Data, to: Data) -> Bool {
-        markNodesUnvisited()
-        guard let fromNode = find(from) else { return false }
-        return fromNode.dfsSearch(to)
+        
     }
 }
 
 extension GraphNode {
     
     fileprivate func dfsSearch(_ data: Data) -> Bool {
-        visited = true
-        guard self.data != data else { return true }
-        guard let adjacentNodes = adjacentNodes else { return false }
-        for node in adjacentNodes where node.visited == false {
-            guard !node.dfsSearch(data) else { return true }
-        }
-        return false
+        
     }
 }
 
@@ -52,19 +44,7 @@ assert(graph.hasRouteDFS(from: 2, to: 3) == true)
 extension Graph {
     
     func hasRouteBFS(from: Data, to: Data) -> Bool {
-        markNodesUnvisited()
-        guard let fromNode = find(from) else { return false }
-        var queue = ArraySlice([fromNode])
-        while let node = queue.first {
-            node.visited = true
-            guard node.data != to else { return true }
-            queue = queue.dropFirst()
-            guard let adjacentNodes = node.adjacentNodes else { continue }
-            for adjacentNode in adjacentNodes where adjacentNode.visited == false {
-                queue.append(adjacentNode)
-            }
-        }
-        return false
+        
     }
 }
 

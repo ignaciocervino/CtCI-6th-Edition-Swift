@@ -8,13 +8,7 @@ import Foundation
 extension List where Element: Equatable {
     
     func isPalindrome() -> Bool {
-        let (left, right) = split(at: count / 2)
-        if count.isEven {
-            return left == right.reversed()
-        }
-        else {
-            return left == right.dropFirst().reversed()
-        }
+        
     }
 }
 

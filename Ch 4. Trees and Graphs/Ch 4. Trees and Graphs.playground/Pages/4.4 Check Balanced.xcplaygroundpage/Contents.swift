@@ -8,12 +8,7 @@ import Foundation
 extension Tree {
     
     func isBalanced() -> Bool {
-        guard !isNil else { return true }
-        guard hasOneChild else {
-            return left.isBalanced() ? right.isBalanced() : false
-        }
-        let childAlsoHasAChild = left.hasChild || right.hasChild
-        return childAlsoHasAChild ? false : true
+        
     }
     
     private var hasOneChild: Bool {

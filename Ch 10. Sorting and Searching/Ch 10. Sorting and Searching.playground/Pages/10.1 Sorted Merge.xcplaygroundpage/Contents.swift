@@ -8,28 +8,6 @@ extension RandomAccessCollection where Iterator.Element: Comparable, SubSequence
   func mergeSorted<C: RandomAccessCollection>(sorted: C) -> [Iterator.Element]
     where C.Iterator.Element == Iterator.Element, C.Index == Index {
       
-      var merged = Array(self) + Array(sorted)
-      var mi = merged.startIndex
-      var i = startIndex
-      var si = sorted.startIndex
-      
-      while i < endIndex && si < sorted.endIndex {
-        if self[i] <= sorted[si] {
-          merged[mi] = self[i]
-          i = index(after: i)
-        }
-        else {
-          merged[mi] = sorted[si]
-          si = sorted.index(after: si)
-        }
-        mi += 1
-      }
-      
-      for x in self[i..<endIndex] {
-        merged[mi] = x
-        mi += 1
-      }
-      return merged
   }
 }
 

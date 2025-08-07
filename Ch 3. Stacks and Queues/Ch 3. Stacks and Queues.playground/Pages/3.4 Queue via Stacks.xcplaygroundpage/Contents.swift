@@ -15,17 +15,10 @@ extension MyQueue {
     
     mutating func enqueue(value: Element) {
         
-        while let top = stack.pop() {
-            placeHolderStack.push(top)
-        }
-        stack.push(value)
-        while let top = placeHolderStack.pop() {
-            stack.push(top)
-        }
     }
     
     mutating func dequeue() -> Element? {
-        return stack.pop()
+        
     }
     
     var peek: Element? {

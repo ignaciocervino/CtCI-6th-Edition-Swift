@@ -6,18 +6,14 @@
 extension String {
     
     func isPermutation(s: String) -> Bool {
-        return characterCounts() == s.characterCounts()
+        
     }
 }
 
 extension String {
     
     func characterCounts() -> [Character: Int] {
-        var characterCounts = [Character: Int]()
-        for char in self {
-            characterCounts[char] = (characterCounts[char] ?? 0) + 1
-        }
-        return characterCounts
+        
     }
 }
 

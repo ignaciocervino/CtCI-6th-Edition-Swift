@@ -13,13 +13,7 @@ import Foundation
 extension Int {
     
     mutating func insert(_ insert: Int, i: Int, j: Int) {
-        guard i < j else { return }
         
-        let leftMask = ~0 << (j + 1)
-        let rightMask = (1 << i) - 1
-        let clearMask = leftMask | rightMask
-        self = self & clearMask
-        self = self | insert << i
     }
 }
 

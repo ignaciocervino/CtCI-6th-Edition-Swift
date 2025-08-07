@@ -5,9 +5,7 @@ import Foundation
 extension List {
     
     func kthToLastElement(k: Int) -> Element? {
-        let dropCount = count - 1 - k
-        guard dropCount >= 0 else { return nil }
-        return dropFirst(dropCount).head
+        
     }
 }
 

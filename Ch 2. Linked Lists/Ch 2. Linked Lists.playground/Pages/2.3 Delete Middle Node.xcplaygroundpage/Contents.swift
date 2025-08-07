@@ -5,13 +5,7 @@ import Foundation
 extension MutableList {
     
     func deleteHeadNode() {
-        guard let tailHead = tail?.head else {
-            head = nil
-            tail = nil
-            return
-        }
-        head = tailHead
-        tail = tail?.tail
+        
     }
 }
 

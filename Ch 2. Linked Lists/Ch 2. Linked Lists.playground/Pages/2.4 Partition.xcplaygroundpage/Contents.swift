@@ -14,19 +14,11 @@ import Foundation
 extension List {
     
     func partition(isOrderedBefore: (Element) -> Bool) -> List {
-        let (left, right) = partition(isOrderedBefore)
-        return left ++ right
+        
     }
     
     private func partition(_ isLeft: (Element) -> Bool) -> (List, List) {
-        guard let head = head else { return (self, self) }
-        let (left, right) = tail.partition(isLeft)
-        if isLeft(head) {
-            return (head ++ left, right)
-        }
-        else {
-            return (left, head ++ right)
-        }
+        
     }
 }
 

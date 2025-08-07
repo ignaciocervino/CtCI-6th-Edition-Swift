@@ -5,13 +5,7 @@ import Foundation
 extension List where Element: Hashable {
     
     func removeDuplicates() -> List {
-        var set = Set<Element>()
-        let list = reduce(List()) {
-            guard !set.contains($1) else { return $0 }
-            set.insert($1)
-            return $1 ++ $0
-        }
-        return list.reversed()
+        
     }
 }
 
@@ -35,11 +29,7 @@ testRemoveDuplicates { list in
 extension List where Element: Hashable {
     
     func removeDuplicatesWithoutBuffer() -> List {
-        let list = reduce(List()) {
-            guard !$0.contains($1) else { return $0 }
-            return $1 ++ $0
-        }
-        return list.reversed()
+        
     }
 }
 

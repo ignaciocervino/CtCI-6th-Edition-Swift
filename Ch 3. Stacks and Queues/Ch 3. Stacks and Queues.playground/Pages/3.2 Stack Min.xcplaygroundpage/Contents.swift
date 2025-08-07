@@ -15,21 +15,11 @@ struct MinStack<Element: Comparable> {
 extension MinStack {
     
     mutating func push(_ value: Element) {
-        array.append(value)
-        if minArray.isEmpty {
-            minArray.append(value)
-        }
-        else if value < minArray.last ?? value {
-            minArray.append(value)
-        }
+        
     }
     
     mutating func pop() -> Element? {
-        guard let last = array.popLast() else { return nil }
-        if last == minArray.last {
-            minArray.removeLast()
-        }
-        return last
+        
     }
     
     var peek: Element? {
@@ -47,7 +37,7 @@ extension MinStack: CustomStringConvertible {
 extension MinStack {
     
     var min: Element? {
-        return minArray.last
+        
     }
 }
 

@@ -8,7 +8,7 @@ import Foundation
 extension String {
     
     func isRotation(of other: String) -> Bool {
-        return (self + self).contains(other)
+        
     }
 }
 

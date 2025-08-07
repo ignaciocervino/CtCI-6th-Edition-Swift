@@ -10,23 +10,7 @@ indirect enum Cell: CustomStringConvertible {
   case Blocked(coordinate: Coordinate, downCell: Cell?, rightCell: Cell?)
   
   var pathToBottomRight: [Coordinate]? {
-    if case .Blocked = self {
-      return nil
-    }
-    switch self {
-    case .Clear(let coordinate, let downCell, let rightCell):
-      if downCell == nil && rightCell == nil {
-        return [coordinate]
-      }
-      if let downPath = downCell?.pathToBottomRight {
-        return [coordinate] + downPath
-      }
-      if let rightPath = rightCell?.pathToBottomRight {
-        return [coordinate] + rightPath
-      }
-      return nil
-    default: return nil
-    }
+    
   }
   
   var description: String {

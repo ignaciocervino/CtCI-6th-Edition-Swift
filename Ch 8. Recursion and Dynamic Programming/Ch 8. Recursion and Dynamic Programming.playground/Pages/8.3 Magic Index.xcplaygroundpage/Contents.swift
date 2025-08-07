@@ -7,21 +7,11 @@ import Foundation
 extension RandomAccessCollection where Index: BinaryInteger, Index == Iterator.Element {
   
   func magicIndex() -> Index? {
-    return magicIndex(low: startIndex, high: index(before: endIndex))
+    
   }
   
   private func magicIndex(low: Index, high: Index) -> Index? {
-    guard low <= high else { return nil }
-    let mid = (low + high) / 2
-    guard self[mid] != mid else { return mid }
     
-    let leftIndex = Swift.min(index(before: mid), self[mid])
-    if let left = magicIndex(low: low, high: leftIndex) {
-      return left
-    }
-    
-    let rightIndex = Swift.max(index(after: mid), self[mid])
-    return magicIndex(low: rightIndex, high: high)
   }
 }
 

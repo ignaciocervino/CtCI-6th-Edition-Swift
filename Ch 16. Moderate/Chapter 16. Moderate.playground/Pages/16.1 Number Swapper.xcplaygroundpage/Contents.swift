@@ -6,9 +6,7 @@ import Foundation
 extension BinaryInteger {
     
     mutating func swap(x: inout Self) {
-        self += x
-        x = self - x
-        self = self - x
+        
     }
 }
 

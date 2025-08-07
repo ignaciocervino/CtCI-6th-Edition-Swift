@@ -13,22 +13,11 @@ import Foundation
 extension List where Element: BinaryInteger {
     
     func sum(integerListReversed: List) -> List {
-        return sum(rightSide: integerListReversed, carry: 0, result: List())
+        
     }
     
     private func sum(rightSide: List, carry: Element, result: List) -> List {
-        guard !isEmpty || !rightSide.isEmpty else {
-            return carry > 0 ? carry ++ result : result
-        }
-        let left = head ?? 0
-        let right = rightSide.head ?? 0
-        let sum = left + right + carry
         
-        if sum >= 10 {
-            let remainder = sum % 10
-            return remainder ++ tail.sum(rightSide: rightSide.tail, carry: 1, result: result)
-        }
-        return sum ++ tail.sum(rightSide: rightSide.tail, carry: 0, result: result)
     }
 }
 
@@ -72,19 +61,11 @@ ApplyConcurrently(iterations: 2.pow(5)).apply {
 extension List where Element: FixedWidthInteger {
     
     func sum(integerListOrdered: List) -> List {
-        let (longer, shorter) = longerAndShorterCollections(other: integerListOrdered)
-        let range = 0..<longer.count - shorter.count
-        let paddedList = range.reduce(shorter) { list, _ in 0 ++ list }
-        let sum = longer.reversedSum(rightSide: paddedList, exponent: longer.count - 1)
-        return List(array: sum.digitsArray())
+        
     }
     
     private func reversedSum(rightSide: List, exponent: Int, result: Element = 0) -> Element {
-        guard let left = head, let right = rightSide.head else { return result }
-        let elementSum = left + right
         
-        let sum = elementSum * Element(10).pow(Element(exponent))
-        return tail.reversedSum(rightSide: rightSide.tail, exponent: exponent - 1, result: sum + result)
     }
 }
 

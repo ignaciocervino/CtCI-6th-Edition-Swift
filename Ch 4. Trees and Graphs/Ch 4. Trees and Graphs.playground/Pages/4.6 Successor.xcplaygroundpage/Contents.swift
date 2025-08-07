@@ -8,20 +8,7 @@ import Foundation
 extension TreeClass {
     
     var successor: TreeClass<Element>? {
-        var minParent: TreeClass? = self
-        while let _minParent = minParent, !_minParent.isLeftChild {
-            minParent = minParent?.parent
-        }
-        minParent = minParent?.parent
         
-        var minRightNode = right
-        while let _ = minRightNode?.left {
-            minRightNode = minRightNode?.left
-        }
-        if let minParent = minParent, let minRightNode = minRightNode {
-            return minParent.element < minRightNode.element ? minParent : minRightNode
-        }
-        return minParent == nil ? minRightNode : minParent
     }    
 }
 

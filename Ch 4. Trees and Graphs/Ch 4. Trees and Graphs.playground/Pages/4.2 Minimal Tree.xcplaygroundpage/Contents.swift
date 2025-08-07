@@ -8,16 +8,11 @@ import Foundation
 extension Tree {
     
     init?(sortedElements: [Element]) {
-        guard let node = Tree.insert(sortedElements), let element = node.element else { return nil }
-        self = .node(element: element, left: node.left, right: node.right)
+        
     }
     
     private static func insert(_ elements: [Element]) -> Tree<Element>? {
-        guard !elements.isEmpty else { return nil }
-        let mid = elements.count / 2
-        let left = insert(Array(elements[0..<mid])) ?? .nil
-        let right = insert(Array(elements[mid + 1..<elements.endIndex])) ?? .nil
-        return .node(element: elements[mid], left: left, right: right)
+        
     }
 }
 

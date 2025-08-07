@@ -43,16 +43,7 @@ extension SortableStack: CustomStringConvertible {
 extension SortableStack {
     
     mutating func sort() {
-        var placeholder = SortableStack<Element>()
-        while let x = pop() {
-            while let y = placeholder.peek, y > x {
-                push(placeholder.pop()!)
-            }
-            placeholder.push(x)
-        }
-        while let y = placeholder.pop() {
-            push(y)
-        }
+        
     }
 }
 

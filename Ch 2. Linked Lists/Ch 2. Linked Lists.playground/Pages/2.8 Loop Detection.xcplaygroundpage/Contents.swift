@@ -13,13 +13,11 @@ import Foundation
 extension MutableList {
     
     func nodeBeginningLoop() -> MutableList? {
-        return nodeBeginningLoop(advanceBy: 1)
+        
     }
     
     private func nodeBeginningLoop(advanceBy: Int) -> MutableList? {
-        guard !isEmpty else { return nil }
-        guard self !== node(at: advanceBy) else { return self }
-        return tail?.nodeBeginningLoop(advanceBy: advanceBy + 1)
+        
     }
 }
 

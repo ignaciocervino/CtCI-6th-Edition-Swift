@@ -23,19 +23,11 @@ struct SetOfStacks<Element> {
 extension SetOfStacks {
     
     mutating func push(_ value: Element) {
-        if var stack = stacks.last, stackCounts.last ?? 0 < maxSize {
-            stack.push(value)
-            stackCounts[stackCounts.count - 1] += 1
-            return stacks[stacks.count - 1] = stack
-        }
-        var stack = Stack<Element>()
-        stack.push(value)
-        stacks.append(stack)
-        stackCounts.append(1)
+        
     }
     
     mutating func pop() -> Element? {
-        return popAt(index: stacks.count - 1)
+        
     }
     
     var peek: Element? {
@@ -50,18 +42,7 @@ extension SetOfStacks {
 extension SetOfStacks {
     
     mutating func popAt(index: Int) -> Element? {
-        guard index < stacks.count else { return nil }
-        var stack = stacks[index]
-        let element = stack.pop()
-        if stack.isEmpty {
-            stacks.remove(at: index)
-            stackCounts.removeLast()
-        }
-        else {
-            stacks[index] = stack
-            stackCounts[stackCounts.count - 1] -= 1
-        }
-        return element
+        
     }
 }
 

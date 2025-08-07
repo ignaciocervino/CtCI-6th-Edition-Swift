@@ -9,24 +9,11 @@ import Foundation
 extension Tree {
     
     func nodesAtEachDepth() -> [[Tree]] {
-        return nodesAtDepth(node: self, depth: 0, nodes: [[Tree]]())
+        
     }
     
     private func nodesAtDepth(node: Tree, depth: Int, nodes: [[Tree]]) -> [[Tree]] {
-        guard case .node = node else { return nodes }
         
-        var nodes = nodes
-        if depth == nodes.count {
-            nodes.append([node])
-        }
-        else {
-            var nodeList = nodes[depth]
-            nodeList.append(node)
-            nodes[depth] = nodeList
-        }
-        nodes = nodesAtDepth(node: node.left, depth: depth + 1, nodes: nodes)
-        nodes = nodesAtDepth(node: node.right, depth: depth + 1, nodes: nodes)
-        return nodes
     }
 }
 

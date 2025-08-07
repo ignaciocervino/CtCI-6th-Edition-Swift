@@ -8,22 +8,7 @@
 extension String {
     
     func compressedString() -> String {
-        guard !isEmpty else { return self }
-        var compressed = "\(self[startIndex])"
-        var compressions = 1
-        for char in dropFirst() {
-            let p = compressed.last
-            if char == p {
-                compressions += 1
-                continue
-            }
-            compressed += "\(compressions)" + "\(char)"
-            compressions = 1
-        }
-        if compressions > 1 {
-            compressed += "\(compressions)"
-        }
-        return compressed.count < count ? compressed : self
+        
     }
 }
 

@@ -20,23 +20,15 @@ struct MultiStack<Element> {
 extension MultiStack {
     
     mutating func push(_ element: Element, onToStack: Int) {
-        guard onToStack >= 0 && onToStack < stacks.count else { return }
-        var stack = stacks[onToStack]
-        stack.append(element)
-        stacks[onToStack] = stack
+        
     }
 
     mutating func pop(stack i: Int) -> Element? {
-        guard i >= 0 && i < stacks.count else { return nil }
-        var stack = stacks[i]
-        let element = stack.popLast()
-        stacks[i] = stack
-        return element
+        
     }
 
     mutating func peek(stack i: Int) -> Element? {
-        guard i >= 0 && i < stacks.count else { return nil }
-        return stacks[i].last
+        
     }
 }
 

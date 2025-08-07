@@ -12,48 +12,11 @@ extension UInt {
     }
     
     private var nextLarger: UInt? {
-        guard self > 0 && self < UInt.max else { return nil }
         
-        var zerosCount: UInt = 0
-        var onesCount: UInt = 0
-        var selfCopy = self
-        while selfCopy & 1 == 0 {
-            zerosCount += 1
-            selfCopy >>= 1
-        }
-        while selfCopy & 1 == 1 {
-            onesCount += 1
-            selfCopy >>= 1
-        }
-        if zerosCount + onesCount >= 63 {
-            return nil
-        }
-        selfCopy = self & ~0 << (zerosCount + onesCount)
-        selfCopy |= 1 << (onesCount - 1) - 1
-        selfCopy |= 1 << (zerosCount + onesCount)
-        return selfCopy
     }
     
     private var nextSmaller: UInt? {
-        guard self > 0 else { return nil }
         
-        var zerosCount: UInt = 0
-        var onesCount: UInt = 0
-        var selfCopy = self
-        while selfCopy & 1 == 1 {
-            onesCount += 1
-            selfCopy >>= 1
-        }
-        guard selfCopy > 0 else { return nil }
-        
-        while selfCopy & 1 == 0 {
-            zerosCount += 1
-            selfCopy >>= 1
-        }
-        selfCopy = self & ~0 << (zerosCount + onesCount + 1)
-        let mask = (1 << (onesCount + 1) - 1)
-        selfCopy |= mask << (zerosCount - 1)
-        return selfCopy
     }
 }
 

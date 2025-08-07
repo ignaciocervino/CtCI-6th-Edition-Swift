@@ -4,17 +4,11 @@
 extension String {
     
     func hasUniqueCharacters() -> Bool {
-        var uniqueCharacters = Set<Character>()
-        for char in self {
-            guard !uniqueCharacters.contains(char) else { return false }
-            uniqueCharacters.insert(char)
-        }
-        return true
+        
     }
     
     func hasUniqueCharactersWithoutAdditionalDataStructs() -> Bool {
-        let repeatedElements = sorted().successiveElements (where: { $0 == $1 })
-        return repeatedElements == nil ? true : false
+        
     }
 }
 

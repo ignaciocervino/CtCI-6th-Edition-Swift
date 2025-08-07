@@ -31,67 +31,30 @@ extension Graph where Data: Hashable {
     }
     
     func buildOrder(projects: [Data]) -> [Data]? {
-        var buildOrder = [Data]()
-        var builtProjects = Set<Data>()
-        for project in projects {
-            guard !builtProjects.contains(project) else { continue }
-            guard let node = find(project) else { return nil }
-            
-            markNodesUnvisited()
-            guard let path = node.dfsPathAcyclic?.reversed().map ({ $0.data }) else { return nil }
-            for project in path where !builtProjects.contains(project) {
-                buildOrder.append(project)
-            }
-            builtProjects.formUnion(path)
-        }
-        return buildOrder
+        
     }
 }
 
 extension GraphNode {
     
     var dfsPath: [GraphNode] {
-        var dfsPath = [GraphNode]()
-        visited = true
-        dfsPath.append(self)
-        guard let adjacentNodes = adjacentNodes else { return dfsPath }
-        for node in adjacentNodes where node.visited == false {
-            dfsPath += node.dfsPath
-        }
-        return dfsPath
+        
     }
     
     var dfsPathAcyclic: [GraphNode]? {
-        return dfsPathAcyclic(visitedNodes: Set())
+        
     }
     
     private func dfsPathAcyclic(visitedNodes: Set<GraphNode<Data>>) -> [GraphNode]? {
-        guard !visitedNodes.contains(self) else { return nil }
-        var dfsPath = [self]
-        guard let adjacentNodes = adjacentNodes else { return dfsPath }
         
-        var visitedNodes = visitedNodes
-        visitedNodes.insert(self)
-        for node in adjacentNodes {
-            guard let path = node.dfsPathAcyclic(visitedNodes: visitedNodes) else { return nil }
-            dfsPath += path
-        }
-        return dfsPath
     }
     
     var containsCycleDFS: Bool {
-        return containsCycleDFS(visitedNodes: Set())
+        
     }
     
     private func containsCycleDFS(visitedNodes: Set<GraphNode<Data>>) -> Bool {
-        guard !visitedNodes.contains(self) else { return true }
-        guard let adjacentNodes = adjacentNodes else { return false }
-        var visitedNodes = visitedNodes
-        visitedNodes.insert(self)
-        for node in adjacentNodes {
-            guard !node.containsCycleDFS(visitedNodes: visitedNodes) else { return true }
-        }
-        return false
+        
     }
 }
 

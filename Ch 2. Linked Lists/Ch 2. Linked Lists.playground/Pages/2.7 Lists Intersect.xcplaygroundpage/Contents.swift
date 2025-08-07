@@ -8,16 +8,7 @@ import Foundation
 extension MutableList {
     
     func intersectingNode(other: MutableList) -> MutableList? {
-        let (longer, shorter) = count > other.count ? (self, other) : (other, self)
-        let list = longer.node(at: longer.count - shorter.count)
-        var left = list
-        var right: MutableList? = shorter
-        while let _ = left?.tail, let _ = right?.tail {
-            guard left !== right else { return left }
-            left = left?.tail
-            right = right?.tail
-        }
-        return nil
+        
     }
 }
 
