@@ -8,12 +8,24 @@ import Foundation
 extension String {
     
     func isRotation(of other: String) -> Bool {
-        
+        guard self.count == other.count else { return false }
+        guard !self.isEmpty, self != other else { return true }
+
+        var rotated = other
+
+        for _ in 0..<self.count {
+            if rotated == self {
+                return true
+            }
+            // Rotate by moving first character to end
+            rotated = String(rotated.dropFirst()) + String(rotated.first!)
+        }
+
+        return false
     }
 }
 
-let a = ""
-" ".isRotation(of: "")
-assert("etcart".isRotation(of: "cartet"))
-assert("cartet".isRotation(of: "etcart"))
-assert("waterbottle".isRotation(of: "erbottlewat"))
+" ".isRotation(of: "")        // true (both empty strings)
+print("etcart".isRotation(of: "cartet"))    // true (different characters)
+print("cartet".isRotation(of: "etcart"))    // false (different characters)
+print("waterbottle".isRotation(of: "erbottlewat"))  // true (rotation)
