@@ -14,34 +14,9 @@ import Foundation
 // TODO: Implement partition function using Node class
 // Should partition the linked list around value x
 func partition<T: Comparable>(_ head: Node<T>?, around x: T) -> Node<T>? {
-    // Your implementation here
     return nil
 }
 
-// Helper function to create linked list from array
-func createLinkedList<T>(_ values: [T]) -> Node<T>? {
-    guard !values.isEmpty else { return nil }
-    let head = Node(value: values[0])
-    var current = head
-    
-    for i in 1..<values.count {
-        current.next = Node(value: values[i])
-        current = current.next!
-    }
-    return head
-}
-
-// Helper function to convert linked list to array for comparison
-func linkedListToArray<T>(_ head: Node<T>?) -> [T] {
-    var result: [T] = []
-    var current = head
-    
-    while let node = current {
-        result.append(node.value)
-        current = node.next
-    }
-    return result
-}
 
 // Helper function to check if partition is valid
 func isValidPartition<T: Comparable>(_ values: [T], partitionValue: T) -> Bool {
@@ -57,104 +32,165 @@ func isValidPartition<T: Comparable>(_ values: [T], partitionValue: T) -> Bool {
     return true
 }
 
+// MARK: - Tests
+
 // Test case 1: Basic partition
-func testPartitionBasic() {
+func testPartitionBasic() -> Bool {
     let values = [3, 5, 8, 5, 10, 2, 1]
     let head = createLinkedList(values)
     let partitioned = partition(head, around: 5)
-    let result = linkedListToArray(partitioned)
-    
-    print("Test 1 - Basic partition:")
+    let result = listToArray(partitioned)
+
+    let validPartition = isValidPartition(result, partitionValue: 5)
+    let sameElements = Set(result) == Set(values) && result.count == values.count
+    let passed = validPartition && sameElements
+
+    print("Test 1 - Basic partition: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
     print("Partition around: 5")
     print("Result: \(result)")
-    print("Valid partition: \(isValidPartition(result, partitionValue: 5))")
-    print("Same elements: \(Set(result) == Set(values) && result.count == values.count)")
+    print("Valid partition: \(validPartition)")
+    print("Same elements: \(sameElements)")
     print()
+    
+    return passed
 }
 
 // Test case 2: All elements smaller than partition
-func testPartitionAllSmaller() {
+func testPartitionAllSmaller() -> Bool {
     let values = [1, 2, 3, 4]
     let head = createLinkedList(values)
     let partitioned = partition(head, around: 5)
-    let result = linkedListToArray(partitioned)
-    
-    print("Test 2 - All elements smaller:")
+    let result = listToArray(partitioned)
+
+    let validPartition = isValidPartition(result, partitionValue: 5)
+    let sameElements = Set(result) == Set(values) && result.count == values.count
+    let passed = validPartition && sameElements
+
+    print("Test 2 - All elements smaller: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
     print("Partition around: 5")
     print("Result: \(result)")
-    print("Valid partition: \(isValidPartition(result, partitionValue: 5))")
-    print("Same elements: \(Set(result) == Set(values) && result.count == values.count)")
+    print("Valid partition: \(validPartition)")
+    print("Same elements: \(sameElements)")
     print()
+    
+    return passed
 }
 
 // Test case 3: All elements larger than partition
-func testPartitionAllLarger() {
+func testPartitionAllLarger() -> Bool {
     let values = [6, 7, 8, 9]
     let head = createLinkedList(values)
     let partitioned = partition(head, around: 5)
-    let result = linkedListToArray(partitioned)
-    
-    print("Test 3 - All elements larger:")
+    let result = listToArray(partitioned)
+
+    let validPartition = isValidPartition(result, partitionValue: 5)
+    let sameElements = Set(result) == Set(values) && result.count == values.count
+    let passed = validPartition && sameElements
+
+    print("Test 3 - All elements larger: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
     print("Partition around: 5")
     print("Result: \(result)")
-    print("Valid partition: \(isValidPartition(result, partitionValue: 5))")
-    print("Same elements: \(Set(result) == Set(values) && result.count == values.count)")
+    print("Valid partition: \(validPartition)")
+    print("Same elements: \(sameElements)")
     print()
+    
+    return passed
 }
 
 // Test case 4: Equal elements
-func testPartitionEqual() {
+func testPartitionEqual() -> Bool {
     let values = [5, 5, 5, 5]
     let head = createLinkedList(values)
     let partitioned = partition(head, around: 5)
-    let result = linkedListToArray(partitioned)
-    
-    print("Test 4 - All elements equal to partition:")
+    let result = listToArray(partitioned)
+
+    let validPartition = isValidPartition(result, partitionValue: 5)
+    let sameElements = Set(result) == Set(values) && result.count == values.count
+    let passed = validPartition && sameElements
+
+    print("Test 4 - All elements equal to partition: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
     print("Partition around: 5")
     print("Result: \(result)")
-    print("Valid partition: \(isValidPartition(result, partitionValue: 5))")
-    print("Same elements: \(Set(result) == Set(values) && result.count == values.count)")
+    print("Valid partition: \(validPartition)")
+    print("Same elements: \(sameElements)")
     print()
+    
+    return passed
 }
 
 // Test case 5: Single element
-func testPartitionSingle() {
+func testPartitionSingle() -> Bool {
     let values = [7]
     let head = createLinkedList(values)
     let partitioned = partition(head, around: 5)
-    let result = linkedListToArray(partitioned)
-    
-    print("Test 5 - Single element:")
+    let result = listToArray(partitioned)
+
+    let validPartition = isValidPartition(result, partitionValue: 5)
+    let sameElements = Set(result) == Set(values) && result.count == values.count
+    let passed = validPartition && sameElements
+
+    print("Test 5 - Single element: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
     print("Partition around: 5")
     print("Result: \(result)")
-    print("Valid partition: \(isValidPartition(result, partitionValue: 5))")
-    print("Same elements: \(Set(result) == Set(values) && result.count == values.count)")
+    print("Valid partition: \(validPartition)")
+    print("Same elements: \(sameElements)")
     print()
+    
+    return passed
 }
 
 // Test case 6: Empty list
-func testPartitionEmpty() {
+func testPartitionEmpty() -> Bool {
     let partitioned = partition(nil, around: 5)
-    let result = linkedListToArray(partitioned)
-    
-    print("Test 6 - Empty list:")
+    let result = listToArray(partitioned)
+    let passed = result.isEmpty
+
+    print("Test 6 - Empty list: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: []")
     print("Partition around: 5")
     print("Result: \(result)")
     print("Is empty: \(result.isEmpty)")
     print()
+    
+    return passed
 }
 
 // Run all tests
-print("=== 2.4 Partition Tests ===")
-testPartitionBasic()
-testPartitionAllSmaller()
-testPartitionAllLarger()
-testPartitionEqual()
-testPartitionSingle()
-testPartitionEmpty()
+func runAllPartitionTests() {
+    print("=== 2.4 Partition Tests ===\n")
+    
+    let results = [
+        testPartitionBasic(),
+        testPartitionAllSmaller(),
+        testPartitionAllLarger(),
+        testPartitionEqual(),
+        testPartitionSingle(),
+        testPartitionEmpty()
+    ]
+    
+    let passedCount = results.filter { $0 }.count
+    let totalCount = results.count
+    let allPassed = passedCount == totalCount
+    
+    print("=== SUMMARY ===")
+    print("Tests passed: \(passedCount)/\(totalCount)")
+    print("\(allPassed ? "✅ ALL TESTS PASSED!" : "❌ SOME TESTS FAILED")")
+    
+    if !allPassed {
+        print("Failed tests:")
+        let testNames = ["Basic partition", "All elements smaller", "All elements larger", "All elements equal", "Single element", "Empty list"]
+        for (index, result) in results.enumerated() {
+            if !result {
+                print("  - Test \(index + 1): \(testNames[index])")
+            }
+        }
+    }
+}
+
+// Run the tests
+runAllPartitionTests()

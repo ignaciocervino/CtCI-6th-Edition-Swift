@@ -6,7 +6,6 @@ import Foundation
 // Important: You only have access to the node to be deleted, not the head of the list
 // The node to delete is guaranteed to not be the last node in the list
 func deleteMiddleNode<T>(_ nodeToDelete: Node<T>) -> Bool {
-    // Your implementation here
     return false
 }
 
@@ -28,142 +27,179 @@ func createLinkedListWithNodeRef<T>(_ values: [T], nodeIndex: Int) -> (head: Nod
     return (head, nodeToDelete)
 }
 
-// Helper function to convert linked list to array for comparison
-func linkedListToArray<T>(_ head: Node<T>?) -> [T] {
-    var result: [T] = []
-    var current = head
-    
-    while let node = current {
-        result.append(node.value)
-        current = node.next
-    }
-    return result
-}
+// MARK: - Tests
 
 // Test case 1: Delete middle node
-func testDeleteMiddleNodeBasic() {
+func testDeleteMiddleNodeBasic() -> Bool {
     let values = ["a", "b", "c", "d", "e"]
     let (head, nodeToDelete) = createLinkedListWithNodeRef(values, nodeIndex: 2) // Delete "c"
     
-    print("Test 1 - Delete middle node:")
-    print("Original: \(values)")
-    print("Deleting node at index 2 (value: 'c')")
-    
     guard let nodeToDelete = nodeToDelete else {
+        print("Test 1 - Delete middle node: ❌ FAILED")
         print("Failed to get node reference")
-        return
+        print()
+        return false
     }
     
     let success = deleteMiddleNode(nodeToDelete)
-    let result = linkedListToArray(head)
+    let result = listToArray(head)
+    let expectedResult = ["a", "b", "d", "e"]
+    let passed = success && result == expectedResult
     
+    print("Test 1 - Delete middle node: \(passed ? "✅ PASSED" : "❌ FAILED")")
+    print("Original: \(values)")
+    print("Deleting node at index 2 (value: 'c')")
     print("Result: \(result)")
-    print("Expected: [\"a\", \"b\", \"d\", \"e\"]")
+    print("Expected: \(expectedResult)")
     print("Success returned: \(success)")
-    print("Passed: \(success && result == ["a", "b", "d", "e"])")
     print()
+    
+    return passed
 }
 
 // Test case 2: Delete first middle node in longer list
-func testDeleteMiddleNodeFirst() {
+func testDeleteMiddleNodeFirst() -> Bool {
     let values = [1, 2, 3, 4, 5, 6, 7]
     let (head, nodeToDelete) = createLinkedListWithNodeRef(values, nodeIndex: 1) // Delete 2
     
-    print("Test 2 - Delete first middle node:")
-    print("Original: \(values)")
-    print("Deleting node at index 1 (value: 2)")
-    
     guard let nodeToDelete = nodeToDelete else {
+        print("Test 2 - Delete first middle node: ❌ FAILED")
         print("Failed to get node reference")
-        return
+        print()
+        return false
     }
     
     let success = deleteMiddleNode(nodeToDelete)
-    let result = linkedListToArray(head)
+    let result = listToArray(head)
+    let expectedResult = [1, 3, 4, 5, 6, 7]
+    let passed = success && result == expectedResult
     
+    print("Test 2 - Delete first middle node: \(passed ? "✅ PASSED" : "❌ FAILED")")
+    print("Original: \(values)")
+    print("Deleting node at index 1 (value: 2)")
     print("Result: \(result)")
-    print("Expected: [1, 3, 4, 5, 6, 7]")
+    print("Expected: \(expectedResult)")
     print("Success returned: \(success)")
-    print("Passed: \(success && result == [1, 3, 4, 5, 6, 7])")
     print()
+    
+    return passed
 }
 
 // Test case 3: Delete second to last node (still valid middle node)
-func testDeleteMiddleNodeSecondToLast() {
+func testDeleteMiddleNodeSecondToLast() -> Bool {
     let values = [10, 20, 30, 40, 50]
     let (head, nodeToDelete) = createLinkedListWithNodeRef(values, nodeIndex: 3) // Delete 40
     
-    print("Test 3 - Delete second to last node:")
-    print("Original: \(values)")
-    print("Deleting node at index 3 (value: 40)")
-    
     guard let nodeToDelete = nodeToDelete else {
+        print("Test 3 - Delete second to last node: ❌ FAILED")
         print("Failed to get node reference")
-        return
+        print()
+        return false
     }
     
     let success = deleteMiddleNode(nodeToDelete)
-    let result = linkedListToArray(head)
+    let result = listToArray(head)
+    let expectedResult = [10, 20, 30, 50]
+    let passed = success && result == expectedResult
     
+    print("Test 3 - Delete second to last node: \(passed ? "✅ PASSED" : "❌ FAILED")")
+    print("Original: \(values)")
+    print("Deleting node at index 3 (value: 40)")
     print("Result: \(result)")
-    print("Expected: [10, 20, 30, 50]")
+    print("Expected: \(expectedResult)")
     print("Success returned: \(success)")
-    print("Passed: \(success && result == [10, 20, 30, 50])")
     print()
+    
+    return passed
 }
 
-// Test case 4: Cannot delete last node (should return false or handle gracefully)
-func testDeleteLastNode() {
+// Test case 4: Cannot delete last node (should return false)
+func testDeleteLastNode() -> Bool {
     let values = [1, 2, 3]
     let (head, nodeToDelete) = createLinkedListWithNodeRef(values, nodeIndex: 2) // Try to delete last node
     
-    print("Test 4 - Try to delete last node (should fail):")
-    print("Original: \(values)")
-    print("Trying to delete last node at index 2 (value: 3)")
-    
     guard let nodeToDelete = nodeToDelete else {
+        print("Test 4 - Try to delete last node: ❌ FAILED")
         print("Failed to get node reference")
-        return
+        print()
+        return false
     }
     
     let success = deleteMiddleNode(nodeToDelete)
-    let result = linkedListToArray(head)
+    let result = listToArray(head)
+    // Should return false and not modify the list
+    let passed = !success
     
+    print("Test 4 - Try to delete last node (should fail): \(passed ? "✅ PASSED" : "❌ FAILED")")
+    print("Original: \(values)")
+    print("Trying to delete last node at index 2 (value: 3)")
     print("Result: \(result)")
-    print("Success returned: \(success)")
-    print("Note: This should return false since we can't delete the last node with this approach")
+    print("Success returned: \(success) (expected: false)")
+    print("Note: Cannot delete last node with this approach")
     print()
+    
+    return passed
 }
 
 // Test case 5: Single element in middle of larger list
-func testDeleteSingleMiddle() {
+func testDeleteSingleMiddle() -> Bool {
     let values = ["x", "y", "z"]
     let (head, nodeToDelete) = createLinkedListWithNodeRef(values, nodeIndex: 1) // Delete "y"
     
-    print("Test 5 - Delete single middle element:")
-    print("Original: \(values)")
-    print("Deleting node at index 1 (value: 'y')")
-    
     guard let nodeToDelete = nodeToDelete else {
+        print("Test 5 - Delete single middle element: ❌ FAILED")
         print("Failed to get node reference")
-        return
+        print()
+        return false
     }
     
     let success = deleteMiddleNode(nodeToDelete)
-    let result = linkedListToArray(head)
+    let result = listToArray(head)
+    let expectedResult = ["x", "z"]
+    let passed = success && result == expectedResult
     
+    print("Test 5 - Delete single middle element: \(passed ? "✅ PASSED" : "❌ FAILED")")
+    print("Original: \(values)")
+    print("Deleting node at index 1 (value: 'y')")
     print("Result: \(result)")
-    print("Expected: [\"x\", \"z\"]")
+    print("Expected: \(expectedResult)")
     print("Success returned: \(success)")
-    print("Passed: \(success && result == ["x", "z"])")
     print()
+    
+    return passed
 }
 
 // Run all tests
-print("=== 2.3 Delete Middle Node Tests ===")
-testDeleteMiddleNodeBasic()
-testDeleteMiddleNodeFirst()
-testDeleteMiddleNodeSecondToLast()
-testDeleteLastNode()
-testDeleteSingleMiddle()
+func runAllDeleteMiddleNodeTests() {
+    print("=== 2.3 Delete Middle Node Tests ===\n")
+    
+    let results = [
+        testDeleteMiddleNodeBasic(),
+        testDeleteMiddleNodeFirst(),
+        testDeleteMiddleNodeSecondToLast(),
+        testDeleteLastNode(),
+        testDeleteSingleMiddle()
+    ]
+    
+    let passedCount = results.filter { $0 }.count
+    let totalCount = results.count
+    let allPassed = passedCount == totalCount
+    
+    print("=== SUMMARY ===")
+    print("Tests passed: \(passedCount)/\(totalCount)")
+    print("\(allPassed ? "✅ ALL TESTS PASSED!" : "❌ SOME TESTS FAILED")")
+    
+    if !allPassed {
+        print("Failed tests:")
+        let testNames = ["Delete middle node basic", "Delete first middle node", "Delete second to last node", "Try to delete last node", "Delete single middle element"]
+        for (index, result) in results.enumerated() {
+            if !result {
+                print("  - Test \(index + 1): \(testNames[index])")
+            }
+        }
+    }
+}
+
+// Run the tests
+runAllDeleteMiddleNodeTests()
 

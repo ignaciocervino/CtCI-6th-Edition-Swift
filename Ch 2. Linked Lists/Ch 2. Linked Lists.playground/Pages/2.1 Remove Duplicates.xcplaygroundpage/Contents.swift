@@ -4,7 +4,6 @@ import Foundation
 
 // TODO: Implement removeDuplicates function using Node class
 // Should remove duplicate values from unsorted linked list using a buffer (Set)
-// 1 -> 2 -> 2 -> 4
 func removeDuplicates<T: Hashable>(_ head: Node<T>?) -> Node<T>? {
     return nil
 }
@@ -16,102 +15,134 @@ func removeDuplicatesWithoutBuffer<T: Equatable>(_ head: Node<T>?) -> Node<T>? {
     return nil
 }
 
-// Helper function to create linked list from array
-func createLinkedList<T>(_ values: [T]) -> Node<T>? {
-    guard !values.isEmpty else { return nil }
-    let head = Node(value: values[0])
-    var current = head
-    
-    for i in 1..<values.count {
-        current.next = Node(value: values[i])
-        current = current.next!
-    }
-    return head
-}
-
-// Helper function to convert linked list to array for comparison
-func linkedListToArray<T>(_ head: Node<T>?) -> [T] {
-    var result: [T] = []
-    var current = head
-    
-    while let node = current {
-        result.append(node.value)
-        current = node.next
-    }
-    return result
-}
+// MARK: - Tests
 
 // Test case 1: Basic duplicate removal with buffer
-func testRemoveDuplicatesWithBuffer() {
+func testRemoveDuplicatesWithBuffer() -> Bool {
     let values = [1, 2, 3, 2, 4, 1, 5]
     let head = createLinkedList(values)
     let result = removeDuplicates(head)
-    let resultArray = linkedListToArray(result)
-    print("Test 1 - Remove duplicates with buffer:")
+    let resultArray = listToArray(result)
+    let expectedElements = Set([1, 2, 3, 4, 5])
+    let passed = Set(resultArray) == expectedElements && resultArray.count == 5
+    
+    print("Test 1 - Remove duplicates with buffer: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
     print("Expected: [1, 2, 3, 4, 5] (order may vary)")
     print("Result: \(resultArray)")
-    print("Passed: \(Set(resultArray) == Set([1, 2, 3, 4, 5]) && resultArray.count == 5)")
+    print("Same elements: \(Set(resultArray) == expectedElements)")
+    print("Correct count: \(resultArray.count == 5)")
     print()
+    
+    return passed
 }
 
 // Test case 2: Basic duplicate removal without buffer
-func testRemoveDuplicatesWithoutBuffer() {
+func testRemoveDuplicatesWithoutBuffer() -> Bool {
     let values = [1, 2, 3, 2, 4, 1, 5]
     let head = createLinkedList(values)
     let result = removeDuplicatesWithoutBuffer(head)
-    let resultArray = linkedListToArray(result)
-    print("Test 2 - Remove duplicates without buffer:")
+    let resultArray = listToArray(result)
+    let expectedElements = Set([1, 2, 3, 4, 5])
+    let passed = Set(resultArray) == expectedElements && resultArray.count == 5
+    
+    print("Test 2 - Remove duplicates without buffer: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
     print("Expected: [1, 2, 3, 4, 5] (order may vary)")
     print("Result: \(resultArray)")
-    print("Passed: \(Set(resultArray) == Set([1, 2, 3, 4, 5]) && resultArray.count == 5)")
+    print("Same elements: \(Set(resultArray) == expectedElements)")
+    print("Correct count: \(resultArray.count == 5)")
     print()
+    
+    return passed
 }
 
 // Test case 3: No duplicates
-func testNoDuplicates() {
+func testNoDuplicates() -> Bool {
     let values = [1, 2, 3, 4, 5]
-    let head = createLinkedList(values)
-    let result1 = removeDuplicates(head)
+    let result1 = removeDuplicates(createLinkedList(values))
     let result2 = removeDuplicatesWithoutBuffer(createLinkedList(values))
-    print("Test 3 - No duplicates:")
+    let resultArray1 = listToArray(result1)
+    let resultArray2 = listToArray(result2)
+    let passed = resultArray1 == values && resultArray2 == values
+    
+    print("Test 3 - No duplicates: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
-    print("Result with buffer: \(linkedListToArray(result1))")
-    print("Result without buffer: \(linkedListToArray(result2))")
+    print("Result with buffer: \(resultArray1)")
+    print("Result without buffer: \(resultArray2)")
+    print("Expected: \(values)")
     print()
+    
+    return passed
 }
 
 // Test case 4: All duplicates
-func testAllDuplicates() {
+func testAllDuplicates() -> Bool {
     let values = [1, 1, 1, 1, 1]
-    let head = createLinkedList(values)
-    let result1 = removeDuplicates(head)
+    let result1 = removeDuplicates(createLinkedList(values))
     let result2 = removeDuplicatesWithoutBuffer(createLinkedList(values))
-    print("Test 4 - All duplicates:")
+    let resultArray1 = listToArray(result1)
+    let resultArray2 = listToArray(result2)
+    let passed = resultArray1 == [1] && resultArray2 == [1]
+    
+    print("Test 4 - All duplicates: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
-    print("Result with buffer: \(linkedListToArray(result1))")
-    print("Result without buffer: \(linkedListToArray(result2))")
+    print("Result with buffer: \(resultArray1)")
+    print("Result without buffer: \(resultArray2)")
+    print("Expected: [1]")
     print()
+    
+    return passed
 }
 
 // Test case 5: Empty list
-func testEmptyList() {
-    let values = [Int]()
-    let head = createLinkedList(values)
-    let result1 = removeDuplicates(head)
-    let result2 = removeDuplicatesWithoutBuffer(head)
-    print("Test 5 - Empty list:")
+func testEmptyList() -> Bool {
+    let null: Node<Int>? = nil
+    let result1 = removeDuplicates(null)
+    let result2 = removeDuplicatesWithoutBuffer(null)
+    let passed = result1 == nil && result2 == nil
+    
+    print("Test 5 - Empty list: \(passed ? "✅ PASSED" : "❌ FAILED")")
+    print("Input: []")
     print("Result with buffer: \(result1 == nil ? "nil" : "not nil")")
     print("Result without buffer: \(result2 == nil ? "nil" : "not nil")")
+    print("Expected: nil")
     print()
+    
+    return passed
 }
 
 // Run all tests
-print("=== 2.1 Remove Duplicates Tests ===")
-testRemoveDuplicatesWithBuffer()
-testRemoveDuplicatesWithoutBuffer()
-testNoDuplicates()
-testAllDuplicates()
-testEmptyList()
+func runAllRemoveDuplicatesTests() {
+    print("=== 2.1 Remove Duplicates Tests ===\n")
+    
+    let results = [
+        testRemoveDuplicatesWithBuffer(),
+        testRemoveDuplicatesWithoutBuffer(),
+        testNoDuplicates(),
+        testAllDuplicates(),
+        testEmptyList()
+    ]
+    
+    let passedCount = results.filter { $0 }.count
+    let totalCount = results.count
+    let allPassed = passedCount == totalCount
+    
+    print("=== SUMMARY ===")
+    print("Tests passed: \(passedCount)/\(totalCount)")
+    print("\(allPassed ? "✅ ALL TESTS PASSED!" : "❌ SOME TESTS FAILED")")
+    
+    if !allPassed {
+        print("Failed tests:")
+        let testNames = ["Remove duplicates with buffer", "Remove duplicates without buffer", "No duplicates", "All duplicates", "Empty list"]
+        for (index, result) in results.enumerated() {
+            if !result {
+                print("  - Test \(index + 1): \(testNames[index])")
+            }
+        }
+    }
+}
+
+// Run the tests
+runAllRemoveDuplicatesTests()
 

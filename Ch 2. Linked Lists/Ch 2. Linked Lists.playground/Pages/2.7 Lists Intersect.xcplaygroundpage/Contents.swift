@@ -8,103 +8,72 @@ import Foundation
 // TODO: Implement getIntersectionNode function using Node class
 // Should return the node where two lists intersect (by reference), or nil if they don't intersect
 func getIntersectionNode<T>(_ headA: Node<T>?, _ headB: Node<T>?) -> Node<T>? {
-    // Your implementation here
     return nil
 }
 
-// Helper function to get the length of a linked list
-func getListLength<T>(_ head: Node<T>?) -> Int {
-    var length = 0
-    var current = head
-    while current != nil {
-        length += 1
-        current = current?.next
-    }
-    return length
-}
+// MARK: - Tests
 
-// Helper function to create a simple linked list
-func createLinkedList<T>(_ values: [T]) -> Node<T>? {
-    guard !values.isEmpty else { return nil }
-    let head = Node(value: values[0])
-    var current = head
-    
-    for i in 1..<values.count {
-        current.next = Node(value: values[i])
-        current = current.next!
-    }
-    return head
-}
-
-// Helper function to create two lists that intersect at a specific node
-func createIntersectingLists() -> (listA: Node<Int>?, listB: Node<Int>?, intersection: Node<Int>?) {
-    // Create the intersection part: 7 -> 8 -> 9
-    let intersection = Node(value: 7)
-    intersection.next = Node(value: 8)
-    intersection.next?.next = Node(value: 9)
-    
-    // Create list A: 1 -> 2 -> 3 -> [intersection]
-    let listA = Node(value: 1)
-    listA.next = Node(value: 2)
-    listA.next?.next = Node(value: 3)
-    listA.next?.next?.next = intersection
-    
-    // Create list B: 4 -> 5 -> [intersection]
-    let listB = Node(value: 4)
-    listB.next = Node(value: 5)
-    listB.next?.next = intersection
-    
-    return (listA, listB, intersection)
-}
 
 // Test case 1: Lists that intersect
-func testIntersectingLists() {
+func testIntersectingLists() -> Bool {
     let (listA, listB, expectedIntersection) = createIntersectingLists()
     let result = getIntersectionNode(listA, listB)
-    
-    print("Test 1 - Intersecting lists:")
+
+    let passed = result === expectedIntersection
+
+    print("Test 1 - Intersecting lists: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("List A: 1 -> 2 -> 3 -> 7 -> 8 -> 9")
     print("List B: 4 -> 5 -> 7 -> 8 -> 9")
     print("Expected intersection at node with value: 7")
     print("Found intersection: \(result?.value ?? -1)")
     print("Correct reference: \(result === expectedIntersection)")
     print()
+
+    return passed
 }
 
 // Test case 2: Lists that don't intersect
-func testNonIntersectingLists() {
+func testNonIntersectingLists() -> Bool {
     let listA = createLinkedList([1, 2, 3, 4])
     let listB = createLinkedList([5, 6, 7, 8])
     let result = getIntersectionNode(listA, listB)
-    
-    print("Test 2 - Non-intersecting lists:")
+
+    let passed = result == nil
+
+    print("Test 2 - Non-intersecting lists: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("List A: 1 -> 2 -> 3 -> 4")
     print("List B: 5 -> 6 -> 7 -> 8")
     print("Expected intersection: nil")
     print("Result: \(result == nil ? "nil" : "not nil")")
     print("Passed: \(result == nil)")
     print()
+
+    return passed
 }
 
 // Test case 3: Same lists (intersect at head)
-func testSameLists() {
+func testSameLists() -> Bool {
     let listA = createLinkedList([1, 2, 3])
     let result = getIntersectionNode(listA, listA)
-    
-    print("Test 3 - Same lists:")
+
+    let passed = result === listA
+
+    print("Test 3 - Same lists: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Both lists are the same: 1 -> 2 -> 3")
     print("Expected intersection at head (value: 1)")
     print("Found intersection: \(result?.value ?? -1)")
     print("Correct reference: \(result === listA)")
     print()
+
+    return passed
 }
 
 // Test case 4: Different length lists that intersect
-func testDifferentLengthIntersection() {
+func testDifferentLengthIntersection() -> Bool {
     // Create intersection part
     let intersection = Node(value: 100)
     intersection.next = Node(value: 200)
-    
+
     // Create longer list: 1 -> 2 -> 3 -> 4 -> 5 -> [intersection]
     let longList = Node(value: 1)
     var current = longList
@@ -113,53 +82,92 @@ func testDifferentLengthIntersection() {
         current = current.next!
     }
     current.next = intersection
-    
+
     // Create shorter list: 10 -> [intersection]
     let shortList = Node(value: 10)
     shortList.next = intersection
-    
+
     let result = getIntersectionNode(longList, shortList)
-    
-    print("Test 4 - Different length intersection:")
+
+    let passed = result === intersection
+
+    print("Test 4 - Different length intersection: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Long list: 1 -> 2 -> 3 -> 4 -> 5 -> 100 -> 200")
     print("Short list: 10 -> 100 -> 200")
     print("Expected intersection at node with value: 100")
     print("Found intersection: \(result?.value ?? -1)")
     print("Correct reference: \(result === intersection)")
     print()
+
+    return passed
 }
 
 // Test case 5: One empty list
-func testOneEmptyList() {
+func testOneEmptyList() -> Bool {
     let listA = createLinkedList([1, 2, 3])
     let result = getIntersectionNode(listA, nil)
-    
-    print("Test 5 - One empty list:")
+
+    let passed = result == nil
+
+    print("Test 5 - One empty list: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("List A: 1 -> 2 -> 3")
     print("List B: nil")
     print("Expected intersection: nil")
     print("Result: \(result == nil ? "nil" : "not nil")")
     print("Passed: \(result == nil)")
     print()
+
+    return passed
 }
 
 // Test case 6: Both empty lists
-func testBothEmptyLists() {
-    let result = getIntersectionNode(nil, nil)
-    
-    print("Test 6 - Both empty lists:")
+func testBothEmptyLists() -> Bool {
+    let null: Node<Int>? = nil
+    let result = getIntersectionNode(null, null)
+
+    let passed = result == nil
+
+    print("Test 6 - Both empty lists: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Both lists are nil")
     print("Expected intersection: nil")
     print("Result: \(result == nil ? "nil" : "not nil")")
     print("Passed: \(result == nil)")
     print()
+
+    return passed
 }
 
 // Run all tests
-print("=== 2.7 Lists Intersect Tests ===")
-testIntersectingLists()
-testNonIntersectingLists()
-testSameLists()
-testDifferentLengthIntersection()
-testOneEmptyList()
-testBothEmptyLists()
+func runAllIntersectionTests() {
+    print("=== 2.7 Lists Intersect Tests ===\n")
+
+    let results = [
+        testIntersectingLists(),
+        testNonIntersectingLists(),
+        testSameLists(),
+        testDifferentLengthIntersection(),
+        testOneEmptyList(),
+        testBothEmptyLists()
+    ]
+
+    let passedCount = results.filter { $0 }.count
+    let totalCount = results.count
+    let allPassed = passedCount == totalCount
+
+    print("=== SUMMARY ===")
+    print("Tests passed: \(passedCount)/\(totalCount)")
+    print("\(allPassed ? "✅ ALL TESTS PASSED!" : "❌ SOME TESTS FAILED")")
+
+    if !allPassed {
+        print("Failed tests:")
+        let testNames = ["Intersecting lists", "Non-intersecting lists", "Same lists", "Different length intersection", "One empty list", "Both empty lists"]
+        for (index, result) in results.enumerated() {
+            if !result {
+                print("  - Test \(index + 1): \(testNames[index])")
+            }
+        }
+    }
+}
+
+// Run the tests
+runAllIntersectionTests()

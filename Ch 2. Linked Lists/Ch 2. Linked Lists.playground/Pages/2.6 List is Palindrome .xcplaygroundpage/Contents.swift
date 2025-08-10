@@ -7,152 +7,179 @@ import Foundation
 
 // TODO: Implement isPalindrome function using Node class
 func isPalindrome<T: Equatable>(_ head: Node<T>?) -> Bool {
-    // Your implementation here
     return false
 }
 
-// Helper function to create linked list from array
-func createLinkedList<T>(_ values: [T]) -> Node<T>? {
-    guard !values.isEmpty else { return nil }
-    let head = Node(value: values[0])
-    var current = head
-    
-    for i in 1..<values.count {
-        current.next = Node(value: values[i])
-        current = current.next!
-    }
-    return head
-}
-
-// Helper function to convert linked list to array for comparison
-func linkedListToArray<T>(_ head: Node<T>?) -> [T] {
-    var result: [T] = []
-    var current = head
-    
-    while let node = current {
-        result.append(node.value)
-        current = node.next
-    }
-    return result
-}
+// MARK: - Tests
 
 // Test case 1: Basic palindrome (odd length)
-func testPalindromeOddLength() {
+func testPalindromeOddLength() -> Bool {
     let values = Array("tacocat") // ["t", "a", "c", "o", "c", "a", "t"]
     let head = createLinkedList(values)
     let result = isPalindrome(head)
     
-    print("Test 1 - Palindrome odd length:")
+    let passed = result == true
+    
+    print("Test 1 - Palindrome odd length: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
     print("Result: \(result)")
     print("Expected: true")
-    print("Passed: \(result == true)")
     print()
+    
+    return passed
 }
 
 // Test case 2: Basic palindrome (even length)
-func testPalindromeEvenLength() {
+func testPalindromeEvenLength() -> Bool {
     let values = [1, 2, 3, 3, 2, 1]
     let head = createLinkedList(values)
     let result = isPalindrome(head)
     
-    print("Test 2 - Palindrome even length:")
+    let passed = result == true
+    
+    print("Test 2 - Palindrome even length: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
     print("Result: \(result)")
     print("Expected: true")
-    print("Passed: \(result == true)")
     print()
+    
+    return passed
 }
 
 // Test case 3: Not a palindrome
-func testNotPalindrome() {
+func testNotPalindrome() -> Bool {
     let values = [1, 2, 3, 4, 5]
     let head = createLinkedList(values)
     let result = isPalindrome(head)
     
-    print("Test 3 - Not a palindrome:")
+    let passed = result == false
+    
+    print("Test 3 - Not a palindrome: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
     print("Result: \(result)")
     print("Expected: false")
-    print("Passed: \(result == false)")
     print()
+    
+    return passed
 }
 
 // Test case 4: Single element
-func testPalindromeSingleElement() {
+func testPalindromeSingleElement() -> Bool {
     let values = ["a"]
     let head = createLinkedList(values)
     let result = isPalindrome(head)
     
-    print("Test 4 - Single element:")
+    let passed = result == true
+    
+    print("Test 4 - Single element: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
     print("Result: \(result)")
     print("Expected: true")
-    print("Passed: \(result == true)")
     print()
+    
+    return passed
 }
 
 // Test case 5: Two elements (palindrome)
-func testPalindromeTwoElements() {
+func testPalindromeTwoElements() -> Bool {
     let values = ["a", "a"]
     let head = createLinkedList(values)
     let result = isPalindrome(head)
     
-    print("Test 5 - Two identical elements:")
+    let passed = result == true
+    
+    print("Test 5 - Two identical elements: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
     print("Result: \(result)")
     print("Expected: true")
-    print("Passed: \(result == true)")
     print()
+    
+    return passed
 }
 
 // Test case 6: Two elements (not palindrome)
-func testNotPalindromeTwoElements() {
+func testNotPalindromeTwoElements() -> Bool {
     let values = ["a", "b"]
     let head = createLinkedList(values)
     let result = isPalindrome(head)
     
-    print("Test 6 - Two different elements:")
+    let passed = result == false
+    
+    print("Test 6 - Two different elements: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
     print("Result: \(result)")
     print("Expected: false")
-    print("Passed: \(result == false)")
     print()
+    
+    return passed
 }
 
 // Test case 7: Empty list
-func testPalindromeEmpty() {
-    let result = isPalindrome(nil)
+func testPalindromeEmpty() -> Bool {
+    let node: Node<Int>? = nil
+    let result = isPalindrome(node)
     
-    print("Test 7 - Empty list:")
+    let passed = result == true
+
+    print("Test 7 - Empty list: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: []")
     print("Result: \(result)")
     print("Expected: true (empty list is considered palindrome)")
-    print("Passed: \(result == true)")
     print()
+    
+    return passed
 }
 
 // Test case 8: Long palindrome
-func testPalindromeLong() {
+func testPalindromeLong() -> Bool {
     let values = [1, 2, 3, 4, 5, 4, 3, 2, 1]
     let head = createLinkedList(values)
     let result = isPalindrome(head)
     
-    print("Test 8 - Long palindrome:")
+    let passed = result == true
+    
+    print("Test 8 - Long palindrome: \(passed ? "✅ PASSED" : "❌ FAILED")")
     print("Input: \(values)")
     print("Result: \(result)")
     print("Expected: true")
-    print("Passed: \(result == true)")
     print()
+    
+    return passed
 }
 
 // Run all tests
-print("=== 2.6 Palindrome Tests ===")
-testPalindromeOddLength()
-testPalindromeEvenLength()
-testNotPalindrome()
-testPalindromeSingleElement()
-testPalindromeTwoElements()
-testNotPalindromeTwoElements()
-testPalindromeEmpty()
-testPalindromeLong()
+func runAllPalindromeTests() {
+    print("=== 2.6 Palindrome Tests ===\n")
+    
+    let results = [
+        testPalindromeOddLength(),
+        testPalindromeEvenLength(),
+        testNotPalindrome(),
+        testPalindromeSingleElement(),
+        testPalindromeTwoElements(),
+        testNotPalindromeTwoElements(),
+        testPalindromeEmpty(),
+        testPalindromeLong()
+    ]
+    
+    let passedCount = results.filter { $0 }.count
+    let totalCount = results.count
+    let allPassed = passedCount == totalCount
+    
+    print("=== SUMMARY ===")
+    print("Tests passed: \(passedCount)/\(totalCount)")
+    print("\(allPassed ? "✅ ALL TESTS PASSED!" : "❌ SOME TESTS FAILED")")
+    
+    if !allPassed {
+        print("Failed tests:")
+        let testNames = ["Palindrome odd length", "Palindrome even length", "Not a palindrome", "Single element", "Two identical elements", "Two different elements", "Empty list", "Long palindrome"]
+        for (index, result) in results.enumerated() {
+            if !result {
+                print("  - Test \(index + 1): \(testNames[index])")
+            }
+        }
+    }
+}
+
+// Run the tests
+runAllPalindromeTests()
