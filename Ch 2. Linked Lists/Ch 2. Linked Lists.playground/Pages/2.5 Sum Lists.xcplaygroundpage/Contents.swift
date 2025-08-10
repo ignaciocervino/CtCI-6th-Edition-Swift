@@ -10,95 +10,231 @@ import Foundation
  Output: `2 -> 1 -> 9,  i.e. 912`
  */
 
-extension List where Element: BinaryInteger {
+// TODO: Implement sumListsReverse function using Node class
+// Digits are stored in reverse order (least significant digit first)
+func sumListsReverse(_ list1: Node<Int>?, _ list2: Node<Int>?) -> Node<Int>? {
+    // Your implementation here
+    return nil
+}
+
+// TODO: Implement sumListsForward function using Node class
+// Digits are stored in forward order (most significant digit first)
+func sumListsForward(_ list1: Node<Int>?, _ list2: Node<Int>?) -> Node<Int>? {
+    // Your implementation here
+    return nil
+}
+
+// Helper function to create linked list from array
+func createLinkedList<T>(_ values: [T]) -> Node<T>? {
+    guard !values.isEmpty else { return nil }
+    let head = Node(value: values[0])
+    var current = head
     
-    func sum(integerListReversed: List) -> List {
-        return sum(rightSide: integerListReversed, carry: 0, result: List())
+    for i in 1..<values.count {
+        current.next = Node(value: values[i])
+        current = current.next!
     }
+    return head
+}
+
+// Helper function to convert linked list to array for comparison
+func linkedListToArray<T>(_ head: Node<T>?) -> [T] {
+    var result: [T] = []
+    var current = head
     
-    private func sum(rightSide: List, carry: Element, result: List) -> List {
-        guard !isEmpty || !rightSide.isEmpty else {
-            return carry > 0 ? carry ++ result : result
-        }
-        let left = head ?? 0
-        let right = rightSide.head ?? 0
-        let sum = left + right + carry
-        
-        if sum >= 10 {
-            let remainder = sum % 10
-            return remainder ++ tail.sum(rightSide: rightSide.tail, carry: 1, result: result)
-        }
-        return sum ++ tail.sum(rightSide: rightSide.tail, carry: 0, result: result)
+    while let node = current {
+        result.append(node.value)
+        current = node.next
     }
+    return result
 }
 
-public extension BinaryInteger {
-    
-    func digitsArray() -> [Self] {
-        return digitsArray(digits: [])
+// Helper to convert number to digits array (reverse order)
+func numberToReversedDigits(_ num: Int) -> [Int] {
+    guard num > 0 else { return [0] }
+    var digits: [Int] = []
+    var n = num
+    while n > 0 {
+        digits.append(n % 10)
+        n /= 10
     }
-    
-    private func digitsArray(digits: [Self]) -> [Self] {
-        guard self > 0 else { return digits }
-        let digit = self % 10
-        let quotient = self / 10
-        return quotient.digitsArray(digits: [digit] + digits)
+    return digits
+}
+
+// Helper to convert number to digits array (forward order)
+func numberToForwardDigits(_ num: Int) -> [Int] {
+    return Array(String(num).compactMap { Int(String($0)) })
+}
+
+// Helper to convert digits array to number (reverse order)
+func reversedDigitsToNumber(_ digits: [Int]) -> Int {
+    var result = 0
+    var multiplier = 1
+    for digit in digits {
+        result += digit * multiplier
+        multiplier *= 10
     }
+    return result
 }
 
-func testSumListsReversed() {
-    
-    let x = Int.random(in: 0...1000)
-    let y = Int.random(in: 0...100)
-    
-    let leftList = List(array: x.digitsArray().reversed())
-    let rightList = List(array: y.digitsArray().reversed())
-    let summedList = leftList.sum(integerListReversed: rightList)
-    
-    let xySumDigits = (x + y).digitsArray()
-    assert(summedList == List(array: xySumDigits.reversed()), "\(summedList) != xyDigits)")
-}
-
-ApplyConcurrently(iterations: 2.pow(5)).apply {
-    testSumListsReversed()
-}
-
-
-/*:
- Follow Up: Suppose the digits in the lists are in order. Sum the two lists and return the result as a
- list
- */
-
-extension List where Element: FixedWidthInteger {
-    
-    func sum(integerListOrdered: List) -> List {
-        let (longer, shorter) = longerAndShorterCollections(other: integerListOrdered)
-        let range = 0..<longer.count - shorter.count
-        let paddedList = range.reduce(shorter) { list, _ in 0 ++ list }
-        let sum = longer.reversedSum(rightSide: paddedList, exponent: longer.count - 1)
-        return List(array: sum.digitsArray())
+// Helper to convert digits array to number (forward order)
+func forwardDigitsToNumber(_ digits: [Int]) -> Int {
+    var result = 0
+    for digit in digits {
+        result = result * 10 + digit
     }
+    return result
+}
+
+// Test case 1: Basic sum with reverse order
+func testSumListsReverseBasic() {
+    // 617 + 295 = 912
+    // Stored as: 7->1->6 + 5->9->2 = 2->1->9
+    let num1 = 617
+    let num2 = 295
+    let list1 = createLinkedList(numberToReversedDigits(num1))
+    let list2 = createLinkedList(numberToReversedDigits(num2))
     
-    private func reversedSum(rightSide: List, exponent: Int, result: Element = 0) -> Element {
-        guard let left = head, let right = rightSide.head else { return result }
-        let elementSum = left + right
-        
-        let sum = elementSum * Element(10).pow(Element(exponent))
-        return tail.reversedSum(rightSide: rightSide.tail, exponent: exponent - 1, result: sum + result)
-    }
+    print("Test 1 - Basic sum (reverse order):")
+    print("Number 1: \(num1), List: \(linkedListToArray(list1))")
+    print("Number 2: \(num2), List: \(linkedListToArray(list2))")
+    
+    let result = sumListsReverse(list1, list2)
+    let resultArray = linkedListToArray(result)
+    let expectedSum = num1 + num2
+    let actualSum = reversedDigitsToNumber(resultArray)
+    
+    print("Result list: \(resultArray)")
+    print("Expected sum: \(expectedSum)")
+    print("Actual sum: \(actualSum)")
+    print("Passed: \(actualSum == expectedSum)")
+    print()
 }
 
-func testSumOrdered() {
-    let x = Int.random(in: 0...1000)
-    let y = Int.random(in: 0...100)
-    let leftList = List(array: x.digitsArray())
-    let rightList = List(array: y.digitsArray())
-    let summedList = leftList.sum(integerListOrdered: rightList)
-    let xySum = x + y
-    assert(summedList == List(array: xySum.digitsArray()), "\(summedList) != xyDigits)")
+// Test case 2: Sum with carry
+func testSumListsReverseWithCarry() {
+    // 999 + 1 = 1000
+    // Stored as: 9->9->9 + 1 = 0->0->0->1
+    let num1 = 999
+    let num2 = 1
+    let list1 = createLinkedList(numberToReversedDigits(num1))
+    let list2 = createLinkedList(numberToReversedDigits(num2))
+    
+    print("Test 2 - Sum with carry (reverse order):")
+    print("Number 1: \(num1), List: \(linkedListToArray(list1))")
+    print("Number 2: \(num2), List: \(linkedListToArray(list2))")
+    
+    let result = sumListsReverse(list1, list2)
+    let resultArray = linkedListToArray(result)
+    let expectedSum = num1 + num2
+    let actualSum = reversedDigitsToNumber(resultArray)
+    
+    print("Result list: \(resultArray)")
+    print("Expected sum: \(expectedSum)")
+    print("Actual sum: \(actualSum)")
+    print("Passed: \(actualSum == expectedSum)")
+    print()
 }
 
-
-ApplyConcurrently(iterations: 2.pow(5)).apply {
-    testSumOrdered()
+// Test case 3: Basic sum with forward order
+func testSumListsForwardBasic() {
+    // 617 + 295 = 912
+    // Stored as: 6->1->7 + 2->9->5 = 9->1->2
+    let num1 = 617
+    let num2 = 295
+    let list1 = createLinkedList(numberToForwardDigits(num1))
+    let list2 = createLinkedList(numberToForwardDigits(num2))
+    
+    print("Test 3 - Basic sum (forward order):")
+    print("Number 1: \(num1), List: \(linkedListToArray(list1))")
+    print("Number 2: \(num2), List: \(linkedListToArray(list2))")
+    
+    let result = sumListsForward(list1, list2)
+    let resultArray = linkedListToArray(result)
+    let expectedSum = num1 + num2
+    let actualSum = forwardDigitsToNumber(resultArray)
+    
+    print("Result list: \(resultArray)")
+    print("Expected sum: \(expectedSum)")
+    print("Actual sum: \(actualSum)")
+    print("Passed: \(actualSum == expectedSum)")
+    print()
 }
+
+// Test case 4: Different lengths (reverse)
+func testSumListsReverseDifferentLengths() {
+    // 99 + 1 = 100
+    // Stored as: 9->9 + 1 = 0->0->1
+    let num1 = 99
+    let num2 = 1
+    let list1 = createLinkedList(numberToReversedDigits(num1))
+    let list2 = createLinkedList(numberToReversedDigits(num2))
+    
+    print("Test 4 - Different lengths (reverse order):")
+    print("Number 1: \(num1), List: \(linkedListToArray(list1))")
+    print("Number 2: \(num2), List: \(linkedListToArray(list2))")
+    
+    let result = sumListsReverse(list1, list2)
+    let resultArray = linkedListToArray(result)
+    let expectedSum = num1 + num2
+    let actualSum = reversedDigitsToNumber(resultArray)
+    
+    print("Result list: \(resultArray)")
+    print("Expected sum: \(expectedSum)")
+    print("Actual sum: \(actualSum)")
+    print("Passed: \(actualSum == expectedSum)")
+    print()
+}
+
+// Test case 5: Different lengths (forward)
+func testSumListsForwardDifferentLengths() {
+    // 1234 + 56 = 1290
+    let num1 = 1234
+    let num2 = 56
+    let list1 = createLinkedList(numberToForwardDigits(num1))
+    let list2 = createLinkedList(numberToForwardDigits(num2))
+    
+    print("Test 5 - Different lengths (forward order):")
+    print("Number 1: \(num1), List: \(linkedListToArray(list1))")
+    print("Number 2: \(num2), List: \(linkedListToArray(list2))")
+    
+    let result = sumListsForward(list1, list2)
+    let resultArray = linkedListToArray(result)
+    let expectedSum = num1 + num2
+    let actualSum = forwardDigitsToNumber(resultArray)
+    
+    print("Result list: \(resultArray)")
+    print("Expected sum: \(expectedSum)")
+    print("Actual sum: \(actualSum)")
+    print("Passed: \(actualSum == expectedSum)")
+    print()
+}
+
+// Test case 6: Zero cases
+func testSumListsZero() {
+    print("Test 6 - Zero cases:")
+    
+    // Test 0 + 5 (reverse)
+    let list1 = createLinkedList([0])
+    let list2 = createLinkedList([5])
+    let result1 = sumListsReverse(list1, list2)
+    print("0 + 5 (reverse): \(linkedListToArray(result1)) (expected: [5])")
+    
+    // Test 0 + 5 (forward)  
+    let result2 = sumListsForward(list1, list2)
+    print("0 + 5 (forward): \(linkedListToArray(result2)) (expected: [5])")
+    
+    // Test empty lists
+    let result3 = sumListsReverse(nil, nil)
+    print("nil + nil: \(result3 == nil ? "nil" : "not nil") (expected: nil)")
+    print()
+}
+
+// Run all tests
+print("=== 2.5 Sum Lists Tests ===")
+testSumListsReverseBasic()
+testSumListsReverseWithCarry()
+testSumListsForwardBasic()
+testSumListsReverseDifferentLengths()
+testSumListsForwardDifferentLengths()
+testSumListsZero()
