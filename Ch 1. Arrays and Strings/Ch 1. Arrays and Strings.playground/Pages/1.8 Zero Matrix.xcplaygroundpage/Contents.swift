@@ -1,47 +1,33 @@
 /*:
- 1.8 Tranform an MxN matrix such that if an element is 0 its column and row are zeroed
+ 1.8 Transform an MxN matrix such that if an element is 0, its entire row and column are zeroed
  */
-
 func zeroedMatrix(_ matrix: [[Int]]) -> [[Int]] {
-    var zeroedMatrix = matrix
-    let zeros = Array(repeating: 0, count: matrix.first?.count ?? 0)
-    for (i, row) in matrix.indicesElements() {
-        guard let column = row.firstIndex (where: { $0 == 0 }) else { continue }
-        zeroColumns(col: column, matrix: &zeroedMatrix)
-        zeroedMatrix[i] = zeros
-    }
-    return zeroedMatrix
+    // Your solution here
+    return []
 }
 
 func zeroedMatrixInPlace(_ matrix: inout [[Int]]) {
-    var zeroedColumns = [Int: Int]()
-    for (i, row) in matrix.indicesElements() {
-        guard let column = row.firstIndex (where: { $0 == 0 }) else { continue }
-        zeroedColumns[i] = column
-    }
-    let zeros = Array(repeating: 0, count: matrix.first?.count ?? 0)
-    for (rowI, col) in zeroedColumns {
-        matrix[rowI] = zeros
-        zeroColumns(col: col, matrix: &matrix)
-    }
+    // Your solution here - modify the matrix in place
 }
 
-func zeroColumns(col: Int, matrix: inout [[Int]]) {
-    
-    for (i, row) in matrix.indicesElements() {
-        var row = row
-        row[col] = 0
-        matrix[i] = row
-    }
-}
+// Tests
+let originalMatrix = [[1, 2, 3, 4],  [5, 0, 7, 8],  [9, 10, 0, 12],  [13, 14, 15, 16]]
+let expected = [[1, 0, 0, 4],  [0, 0, 0, 0],  [0, 0, 0, 0],  [13, 0, 0, 16]]
 
-let matrix = [[1, 2, 3, 4],  [5, 0, 7, 8],  [9, 10, 0, 12],  [13, 14, 15, 16]]
-let zeroed = zeroedMatrix(matrix)
-let verify = [[1, 0, 0, 4],  [0, 0, 0, 0],  [0, 0, 0, 0],  [13, 0, 0, 16]]
+let zeroed = zeroedMatrix(originalMatrix)
+let test1 = zeroed.elementsEqual(expected, by: { $0.elementsEqual($1, by: ==) })
 
-assert(zeroed.elementsEqual(verify, by: ==))
-print(zeroed)
-
-var copy = matrix
+var copy = originalMatrix
 zeroedMatrixInPlace(&copy)
-assert(copy.elementsEqual(verify, by: ==))
+let test2 = copy.elementsEqual(expected, by: { $0.elementsEqual($1, by: ==) })
+
+let matrixNoZeros = [[1, 2], [3, 4]]
+let resultNoZeros = zeroedMatrix(matrixNoZeros)
+let test3 = resultNoZeros.elementsEqual(matrixNoZeros, by: { $0.elementsEqual($1, by: ==) })
+
+print(test1 ? "✅" : "❌", "Test 1")
+print(test2 ? "✅" : "❌", "Test 2")
+print(test3 ? "✅" : "❌", "Test 3")
+
+let allPassed = test1 && test2 && test3
+print("\n" + (allPassed ? "✅ ALL TESTS PASSED" : "❌ SOME TESTS FAILED"))

@@ -1,32 +1,31 @@
-/*: 
+/*:
  1.6 Implement basic string compression using the counts of repeated characters. 
  If the compressed string is not smaller than the original, return the original.
- You can assume the string has only characters a-z \
-  `aabcccccaaa -> a2b1c5a3`
+ You can assume the string has only characters a-z 
+  Example: `aabcccccaaa -> a2b1c5a3`
  */
-
 extension String {
-    
     func compressedString() -> String {
-        guard !isEmpty else { return self }
-        var compressed = "\(self[startIndex])"
-        var compressions = 1
-        for char in dropFirst() {
-            let p = compressed.last
-            if char == p {
-                compressions += 1
-                continue
-            }
-            compressed += "\(compressions)" + "\(char)"
-            compressions = 1
-        }
-        if compressions > 1 {
-            compressed += "\(compressions)"
-        }
-        return compressed.count < count ? compressed : self
+
+        return ""
     }
 }
 
-var s = "aabcccccaaa"
-let compressed = s.compressedString()
-assert(compressed == "a2b1c5a3", "\(compressed) != a2b1c5a3")
+// Tests
+let s1 = "aabcccccaaa"
+let s2 = "abc"
+let s3 = "aabbcc"
+let s4 = ""
+
+let test1 = s1.compressedString() == "a2b1c5a3"
+let test2 = s2.compressedString() == "abc"
+let test3 = s3.compressedString() == "aabbcc"
+let test4 = s4.compressedString() == ""
+
+print(test1 ? "✅" : "❌", "Test 1")
+print(test2 ? "✅" : "❌", "Test 2")
+print(test3 ? "✅" : "❌", "Test 3")
+print(test4 ? "✅" : "❌", "Test 4")
+
+let allPassed = test1 && test2 && test3 && test4
+print("\n" + (allPassed ? "✅ ALL TESTS PASSED" : "❌ SOME TESTS FAILED"))

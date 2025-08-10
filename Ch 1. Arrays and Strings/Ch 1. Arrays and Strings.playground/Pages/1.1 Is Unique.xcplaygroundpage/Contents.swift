@@ -2,27 +2,30 @@
  1.1 Determine if a string has all unique characters. What if you can't use additional data structures?
  */
 extension String {
-    
     func hasUniqueCharacters() -> Bool {
-        var uniqueCharacters = Set<Character>()
-        for char in self {
-            guard !uniqueCharacters.contains(char) else { return false }
-            uniqueCharacters.insert(char)
-        }
-        return true
+
+        return false
     }
     
     func hasUniqueCharactersWithoutAdditionalDataStructs() -> Bool {
-        let repeatedElements = sorted().successiveElements (where: { $0 == $1 })
-        return repeatedElements == nil ? true : false
+        
+        return false
     }
 }
 
+// Tests
 let unique = "abc"
-assert(unique.hasUniqueCharacters())
 let dup = "abca"
 
-assert(!dup.hasUniqueCharactersWithoutAdditionalDataStructs())
+let test1 = unique.hasUniqueCharacters() == true
+let test2 = dup.hasUniqueCharacters() == false
+let test3 = unique.hasUniqueCharactersWithoutAdditionalDataStructs() == true
+let test4 = dup.hasUniqueCharactersWithoutAdditionalDataStructs() == false
 
+print(test1 ? "✅" : "❌", "Test 1")
+print(test2 ? "✅" : "❌", "Test 2") 
+print(test3 ? "✅" : "❌", "Test 3")
+print(test4 ? "✅" : "❌", "Test 4")
 
-
+let allPassed = test1 && test2 && test3 && test4
+print("\n" + (allPassed ? "✅ ALL TESTS PASSED" : "❌ SOME TESTS FAILED"))

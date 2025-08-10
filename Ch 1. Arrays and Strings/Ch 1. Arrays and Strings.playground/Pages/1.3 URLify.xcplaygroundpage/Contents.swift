@@ -1,40 +1,37 @@
 import Foundation
 
-
 /*:
 1.3 Replace all spaces in a string with %20
 */
-
 extension String {
-    
     func urlIfy() -> String {
-        var s = ""
-        for char in self {
-            s += char == " " ? "%20" : String(char)
-        }
-        return s
+        
+        return ""
     }
     
     mutating func urlIfyInPlace() {
-        var replacements = 0
-        for i in indices where self[i] == " " {
-            replaceSubrange(i...i, with: "%")
-            let next = index(after: i)
-            insert(contentsOf: "20", at: next)
-            replacements += 1
-        }
-        removeLast(replacements * 2)
+
     }
 }
 
+// Tests
 let verify = "mr%20john%20smith"
 var string = "mr john smith"
-assert(string.urlIfy() == verify)
+
+let test1 = string.urlIfy() == verify
 
 string = "mr john smith    "
 var copy = string
 copy.urlIfyInPlace()
-print("\"\(copy)\"")
-assert(copy == verify)
+let test2 = copy == verify
 
+let empty = ""
+let test3 = empty.urlIfy() == ""
+
+print(test1 ? "✅" : "❌", "Test 1")
+print(test2 ? "✅" : "❌", "Test 2")
+print(test3 ? "✅" : "❌", "Test 3")
+
+let allPassed = test1 && test2 && test3
+print("\n" + (allPassed ? "✅ ALL TESTS PASSED" : "❌ SOME TESTS FAILED"))
 
