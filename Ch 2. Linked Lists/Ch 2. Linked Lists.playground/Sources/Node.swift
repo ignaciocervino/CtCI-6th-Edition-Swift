@@ -9,9 +9,18 @@ public class LinkedList<Value> {
     public var head: Node<Value>?
     public var tail: Node<Value>?
 
-    init(head: Node<Value>?, tail: Node<Value>? = nil) {
+    public init(head: Node<Value>?, tail: Node<Value>? = nil) {
         self.head = head
-        self.tail = tail ?? head
+        if let providedTail = tail {
+            self.tail = providedTail
+        } else {
+            var curr = head
+
+            while curr?.next != nil {
+                curr = curr?.next
+            }
+            self.tail = curr
+        }
     }
 }
 
@@ -27,7 +36,13 @@ public class Node<Value> {
 
 public extension Node {
     var count: Int {
-        return 1 + (next?.count ?? 0)
+        var _count = 1
+        var current = next
+        while let node = current {
+            _count += 1
+            current = node.next
+        }
+        return _count
     }
 
     func at(index: Int) -> Node<Value>? {
