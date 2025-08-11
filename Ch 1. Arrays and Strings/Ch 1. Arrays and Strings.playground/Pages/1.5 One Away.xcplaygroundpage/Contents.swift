@@ -2,9 +2,17 @@
  1.5 There are three types of character edits on strings: insert, replace, or delete. 
     Write a function to return if one string is 0 or 1 edit away from the other
  */
+/// One Away: There are three types of edits that can be performed on strings: insert a character,
+/// remove a character, or replace a character. Given two strings, write a function to check if they are
+/// one edit (or zero edits) away.
+/// EXAMPLE
+/// p a l e , p i e - > t r u e
+/// p a l e s , p a l e - > t r u e
+/// p a l e , b a l e - > t r u e
+/// p a l e , bae - > f a l s e
+
 extension String {
     func zeroOrOneEditAway(from s: String) -> Bool {
-        
         return false
     }
 }
@@ -27,7 +35,7 @@ let test11 = "".zeroOrOneEditAway(from: "ab") == false             // Too many d
 let test12 = "cat".zeroOrOneEditAway(from: "dog") == false         // All different chars
 let test13 = "cats".zeroOrOneEditAway(from: "cat") == true         // Insert at end
 let test14 = "cat".zeroOrOneEditAway(from: "cats") == true         // Delete from end
-let test15 = "act".zeroOrOneEditAway(from: "cat") == true          // Replace first char
+let test15 = "act".zeroOrOneEditAway(from: "cat") == false          // Replace first char
 
 // More complex cases
 let test16 = "intention".zeroOrOneEditAway(from: "execution") == false  // Multiple edits needed
